@@ -7,6 +7,8 @@ ParticleSystem pr;
 
 ParticleSystem tempPart;
 
+Particle particle;
+
 float uicol = 255;
 float acc1 = 2;
 float acc2 = 2;
@@ -17,6 +19,7 @@ float angbot;
 // edit radioactivity into variables
 float radio1;
 float radio2;
+int slow = 15;
 
 void setup() {
   
@@ -87,17 +90,17 @@ void draw() {
   
   background(124,198,205);
   
-  if(frameCount%1==0)
+  if(frameCount%slow==0)
     pl.addParticle(acc1, speed1, speed1+0.2, angtop, angtop+0);
     pl.run(color(74, 82, 231), 20);
   
-  if(frameCount%1==0)
+  if(frameCount%slow==0)
     pr.addParticle(-acc2, -speed2, -speed2+0.2, angbot, angbot+0);
     pr.run(color(255, 234, 0), 20);
   
   pr.detectBeam(pl);
   
-  if(frameCount%1==0)
+  if(frameCount%slow==0)
     tempPart.addParticle(0, speed2, speed2, angbot, angtop);
     tempPart.run(color(255, 255, 255), 8);
   
@@ -135,6 +138,11 @@ void disInfo() {
   text("Bottom Particle Angle: " + angbot, 50, 120);
   
 }
+
+void mouseDragged() {
+  camera(mouseX, height/2, (height/2) / tan(PI/6), mouseX, height/2, 0, 0, 1, 0);
+}
+
 
 //void colide() {
 //  print(pr.location.y);

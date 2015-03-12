@@ -2,6 +2,7 @@ class ParticleSystem {
   ArrayList<Particle> particles;
   PVector origin;
   PVector hidden = new PVector(0,0);
+  boolean colides;
 
   ParticleSystem(PVector location) {
     origin = location.get();
@@ -28,13 +29,16 @@ class ParticleSystem {
     {
       Particle _particle = particles.get(i);
       if(_particle.detect(_p2.particles)) {
-        tempPart.hidden = _particle.location;
+        tempPart.origin = _particle.location;
         particles.remove(i);
         //background(255,0,0);
+        //colides = true;
       } else {
-        //background(0,255,0);
-        //tempPart.remove(i);
-      }
+        //colides = false;
+      } 
+    }
+    if (colides) {
+      background(0,255,0);
     }
   }
   

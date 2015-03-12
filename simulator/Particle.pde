@@ -9,6 +9,10 @@ class Particle {
   float speeder1;
   float speeder2;
   color pcol;
+  
+  float rotx;
+  float roty;
+  float rate = 0.02;
 
   Particle(PVector l, float speedDir, float speeder1, float speeder2, float ang1, float ang2) {
     acceleration = new PVector(speedDir, 0);
@@ -32,7 +36,14 @@ class Particle {
   void display(color pcol, float size) {
     stroke(pcol);
     fill(pcol);
-    ellipse(location.x, location.y, size, size);
+    lights();
+    pushMatrix();
+    rotateX(rotx);
+    rotateY(roty);
+    translate(location.x, location.y, 0);
+    sphere(size);
+    popMatrix();
+    //ellipse(location.x, location.y, size, size);
   }
   
     boolean detect(ArrayList<Particle> _p2) {
@@ -45,7 +56,7 @@ class Particle {
       location.y > _particle1.location.y-10
       ){
         _p2.remove(i);
-        background(255,0,0);
+        //background(255,0,0);
         return true;
       } else {
         
