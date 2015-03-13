@@ -25,8 +25,8 @@ void setup() {
   
   size(640,640, P3D);
   
-  pl = new ParticleSystem(new PVector(-50,130));
-  pr = new ParticleSystem(new PVector(690,300));
+  pl = new ParticleSystem(new PVector(0,130));
+  pr = new ParticleSystem(new PVector(650,300));
   tempPart = new ParticleSystem(new PVector(-50,-50));
   
   cp5 = new ControlP5(this);

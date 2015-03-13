@@ -66,7 +66,7 @@ class Particle {
     }
 
   boolean isDead() {
-    if (location.x > width+100 || location.x < -100 || location.y > height+100 || location.y < -100) {
+    if (location.x > width+10 || location.x < -10 || location.y > height+10 || location.y < -10) {
       return true;
     } else {
       return false;
