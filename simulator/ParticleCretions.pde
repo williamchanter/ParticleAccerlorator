@@ -1,4 +1,4 @@
-class ParticleOff {
+class Particleoffshot {
   PVector location;
   PVector velocity;
   PVector acceleration;
@@ -14,11 +14,15 @@ class ParticleOff {
   float roty;
   float rate = 0.02;
 
-  ParticleOff(PVector l, float speedDir, float speeder1, float speeder2, float ang1, float ang2) {
+  Particleoffshot(PVector l, float speedDir, float speeder1, float speeder2, float ang1, float ang2) {
     acceleration = new PVector(speedDir, 0);
-    velocity = new PVector(speeder1, speeder2);
+    velocity = new PVector(random(speeder1, speeder2), random(ang1, ang2));
     location = l.get();
     momentum = (velocity.x+velocity.y)*10;
+    //acceleration = new PVector(0, 0);
+    //velocity = new PVector(x, y, z);
+    //location = l;
+    //momentum = (velocity.x+velocity.y)*10;
   }
 
   void run(color pcol, float size) {

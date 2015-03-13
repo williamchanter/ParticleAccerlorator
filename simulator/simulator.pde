@@ -7,7 +7,7 @@ ParticleSystem pr;
 
 ParticleSystem tempPart;
 
-ParticleOff particle;
+Particleoffshot particle;
 
 float uicol = 255;
 float acc1 = 2;
@@ -23,6 +23,8 @@ float radio2;
 int slow = 1;
 
 boolean cameraSpin;
+
+PVector v;
 
 void setup() {
   
@@ -109,8 +111,9 @@ void draw() {
     pr.detectBeam(pl);
   
     if(frameCount%slow==0)
-      tempPart.addParticle(0, speed2, speed2, 0, 0);
-      tempPart.run(color(255, 255, 255), 8);
+      v = PVector.random3D();
+      tempPart.addParticleOff(-acc2, -speed2, -speed2+0.2, angbot, angbot+0);
+      tempPart.runOff(color(255, 255, 255), 8);
     endCamera();
     popMatrix();
   
@@ -118,10 +121,10 @@ void draw() {
   disInfo();
   conPannel();
 
-  println(cameraSpin);
 }
 
 void layout(float top, float bottom, float left, float right, float uiback) {
+  
   fill(uiback);
   noStroke();
   rect(0, 0, left, 400);

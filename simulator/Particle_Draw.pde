@@ -1,11 +1,13 @@
 class ParticleSystem {
   ArrayList<Particle> particles;
+  ArrayList<Particleoffshot> particlesoff;
+  
   PVector origin;
   PVector hidden = new PVector(0,0);
   boolean colides;
 
   ParticleSystem(PVector location) {
-    origin = location.get();
+    origin = location;
     particles = new ArrayList<Particle>();
   }
 
@@ -19,6 +21,20 @@ class ParticleSystem {
       p.run(pcol, size);
       if (p.isDead()) {
         particles.remove(i);
+      }
+    }
+  }
+  
+  void addParticleOff(float speedDir, float speeder1, float speeder2, float ang1, float ang2) {
+    particlesoff.add(new Particleoffshot(origin, speedDir, speeder1, speeder2, ang1, ang2));
+  }
+
+  void runOff(color pcol, float size) {
+    for (int i = particles.size ()-1; i >= 0; i--) {
+      Particleoffshot p = particlesoff.get(i);
+      p.run(pcol, size);
+      if (p.isDead()) {
+        particlesoff.remove(i);
       }
     }
   }
