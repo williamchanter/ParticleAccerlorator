@@ -14,12 +14,10 @@ class Particleoffshot {
   float roty;
   float rate = 0.02;
 
-  Particleoffshot(PVector l, float speedDir, float speeder1, float speeder2, float ang1, float ang2) {
-    acceleration = new PVector(speedDir, 0);
-    velocity = new PVector(random(speeder1, speeder2), random(ang1, ang2));
-    println(velocity);
-    location = l.get();
-    momentum = (velocity.x+velocity.y)*10;
+  Particleoffshot(PVector l, float speedDir, float x, float y, float z) {
+    acceleration = new PVector(speedDir, speedDir, speedDir);
+    velocity = new PVector(x, y, z);
+    location = l;
     //acceleration = new PVector(0, 0);
     //velocity = new PVector(x, y, z);
     //location = l;
@@ -45,7 +43,7 @@ class Particleoffshot {
     pushMatrix();
     rotateX(rotx);
     rotateY(roty);
-    translate(location.x, location.y, 0);
+    translate(location.x, location.y, location.z);
     sphere(size);
     popMatrix();
     //ellipse(location.x, location.y, size, size);

@@ -30,7 +30,7 @@ void setup() {
   
   pl = new ParticleSystem(new PVector(0,130));
   pr = new ParticleSystem(new PVector(650,300));
-  tempPart = new ParticleSystem(new PVector(200,200));
+  tempPart = new ParticleSystem(new PVector(0,0,0));
   
   cp5 = new ControlP5(this);
   cp5.setColorForeground(0x00000000);
@@ -98,6 +98,7 @@ void draw() {
     if (cameraSpin){
     camera(mouseX, mouseY, 120.0, width/2, height/2, -10, 0.0, 1.0, 0.0);
     }
+    translate(0,0,-30);
     if(frameCount%slow==0)
       pl.addParticle(acc1, speed1, speed1+0.2, angtop, angtop+0);
       pl.run(color(74, 82, 231), 20);
@@ -110,7 +111,7 @@ void draw() {
   
     if(frameCount%slow==0)
       v = PVector.random3D();
-      tempPart.addParticleOff(1, 10, 10, 1, 1);
+      tempPart.addParticleOff(0,random(-10,10),random(-10,10),random(-10,10));
       tempPart.runOff(color(0, 255, 0), 8);
     endCamera();
     popMatrix();
@@ -122,7 +123,6 @@ void draw() {
 }
 
 void layout(float top, float bottom, float left, float right, float uiback) {
-  
   fill(uiback);
   noStroke();
   rect(0, 0, left, 400);

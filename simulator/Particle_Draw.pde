@@ -26,12 +26,12 @@ class ParticleSystem {
     }
   }
   
-  void addParticleOff(float speedDir, float speeder1, float speeder2, float ang1, float ang2) {
-    particlesoff.add(new Particleoffshot(origin, speedDir, speeder1, speeder2, ang1, ang2));
+  void addParticleOff(float speedDir, float x, float y, float z) {
+    particlesoff.add(new Particleoffshot(origin, speedDir, x, y, z));
   }
 
   void runOff(color pcol, float size) {
-    for (int i = particles.size ()-1; i >= 0; i--) {
+    for (int i = particlesoff.size ()-1; i >= 0; i--) {
       Particleoffshot p = particlesoff.get(i);
       p.run(pcol, size);
       if (p.isDead()) {
@@ -48,7 +48,7 @@ class ParticleSystem {
       if(_particle.detect(_p2.particles)) {
         tempPart.origin = _particle.location;
         particles.remove(i);
-        background(255,0,0);
+        //background(255,0,0);
         //colides = true;
       } else {
         //colides = false;
