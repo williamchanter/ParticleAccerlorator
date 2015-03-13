@@ -7,19 +7,22 @@ ParticleSystem pr;
 
 ParticleSystem tempPart;
 
-Particle particle;
+ParticleOff particle;
 
 float uicol = 255;
 float acc1 = 2;
 float acc2 = 2;
+
 float speed1;
 float speed2;
 float angtop;
 float angbot;
-// edit radioactivity into variables
 float radio1;
 float radio2;
-int slow = 15;
+
+int slow = 1;
+
+boolean cameraSpin;
 
 void setup() {
   
@@ -69,7 +72,7 @@ void setup() {
     .setPosition(480, 430)
       .setSize(20, 160)
         .setRange(0, -10)
-          .setValue(-2)
+          .setValue(-6.81)
             .setColorCaptionLabel(color(20, 20, 200));
             
   cp5.addSlider("radio1")
@@ -90,24 +93,32 @@ void draw() {
   
   background(124,198,205);
   
-  if(frameCount%slow==0)
-    pl.addParticle(acc1, speed1, speed1+0.2, angtop, angtop+0);
-    pl.run(color(74, 82, 231), 20);
+    pushMatrix();
+    beginCamera();
+    if (cameraSpin){
+    camera(mouseX, mouseY, 120.0, width/2, height/2, -10, 0.0, 1.0, 0.0);
+    }
+    if(frameCount%slow==0)
+      pl.addParticle(acc1, speed1, speed1+0.2, angtop, angtop+0);
+      pl.run(color(74, 82, 231), 20);
+    
+    if(frameCount%slow==0)
+      pr.addParticle(-acc2, -speed2, -speed2+0.2, angbot, angbot+0);
+      pr.run(color(255, 234, 0), 20);
+    
+    pr.detectBeam(pl);
   
-  if(frameCount%slow==0)
-    pr.addParticle(-acc2, -speed2, -speed2+0.2, angbot, angbot+0);
-    pr.run(color(255, 234, 0), 20);
-  
-  pr.detectBeam(pl);
-  
-  if(frameCount%slow==0)
-    tempPart.addParticle(0, speed2, speed2, angbot, angtop);
-    tempPart.run(color(255, 255, 255), 8);
+    if(frameCount%slow==0)
+      tempPart.addParticle(0, speed2, speed2, 0, 0);
+      tempPart.run(color(255, 255, 255), 8);
+    endCamera();
+    popMatrix();
   
   layout(40,40,40,40, uicol);
   disInfo();
   conPannel();
 
+  println(cameraSpin);
 }
 
 void layout(float top, float bottom, float left, float right, float uiback) {
@@ -140,7 +151,10 @@ void disInfo() {
 }
 
 void mouseDragged() {
-  camera(mouseX, height/2, (height/2) / tan(PI/6), mouseX, height/2, 0, 0, 1, 0);
+  cameraSpin = true;
+}
+void mouseReleased() {
+  cameraSpin = false;
 }
 
 
