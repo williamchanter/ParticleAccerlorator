@@ -9,6 +9,7 @@ class ParticleSystem {
   ParticleSystem(PVector location) {
     origin = location;
     particles = new ArrayList<Particle>();
+    particlesoff = new ArrayList<Particleoffshot>();
   }
 
   void addParticle(float speedDir, float speeder1, float speeder2, float ang1, float ang2) {
@@ -47,14 +48,11 @@ class ParticleSystem {
       if(_particle.detect(_p2.particles)) {
         tempPart.origin = _particle.location;
         particles.remove(i);
-        //background(255,0,0);
+        background(255,0,0);
         //colides = true;
       } else {
         //colides = false;
       } 
-    }
-    if (colides) {
-      background(0,255,0);
     }
   }
   

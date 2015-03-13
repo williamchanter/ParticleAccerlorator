@@ -17,6 +17,7 @@ class Particleoffshot {
   Particleoffshot(PVector l, float speedDir, float speeder1, float speeder2, float ang1, float ang2) {
     acceleration = new PVector(speedDir, 0);
     velocity = new PVector(random(speeder1, speeder2), random(ang1, ang2));
+    println(velocity);
     location = l.get();
     momentum = (velocity.x+velocity.y)*10;
     //acceleration = new PVector(0, 0);
@@ -49,25 +50,6 @@ class Particleoffshot {
     popMatrix();
     //ellipse(location.x, location.y, size, size);
   }
-  
-    boolean detect(ArrayList<Particle> _p2) {
-    for (int i = 0; i < _p2.size(); i++) {  
-      Particle _particle1 = _p2.get(i);
-      if(
-      location.x < _particle1.location.x+10 && 
-      location.x > _particle1.location.x-10 && 
-      location.y < _particle1.location.y+10 && 
-      location.y > _particle1.location.y-10
-      ){
-        _p2.remove(i);
-        //background(255,0,0);
-        return true;
-      } else {
-        
-      }
-    }
-      return false;
-    }
 
   boolean isDead() {
     if (location.x > width+10 || location.x < -10 || location.y > height+10 || location.y < -10) {

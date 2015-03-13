@@ -7,8 +7,6 @@ ParticleSystem pr;
 
 ParticleSystem tempPart;
 
-Particleoffshot particle;
-
 float uicol = 255;
 float acc1 = 2;
 float acc2 = 2;
@@ -32,7 +30,7 @@ void setup() {
   
   pl = new ParticleSystem(new PVector(0,130));
   pr = new ParticleSystem(new PVector(650,300));
-  tempPart = new ParticleSystem(new PVector(-50,-50));
+  tempPart = new ParticleSystem(new PVector(200,200));
   
   cp5 = new ControlP5(this);
   cp5.setColorForeground(0x00000000);
@@ -112,8 +110,8 @@ void draw() {
   
     if(frameCount%slow==0)
       v = PVector.random3D();
-      tempPart.addParticleOff(-acc2, -speed2, -speed2+0.2, angbot, angbot+0);
-      tempPart.runOff(color(255, 255, 255), 8);
+      tempPart.addParticleOff(1, 10, 10, 1, 1);
+      tempPart.runOff(color(0, 255, 0), 8);
     endCamera();
     popMatrix();
   
