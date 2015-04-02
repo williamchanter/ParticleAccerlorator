@@ -1,8 +1,9 @@
 import controlP5.*;
-import processing.sound.*;
 
+import ddf.minim.*; // Liabary tot contorl music playback
+Minim minim;
+AudioPlayer player;
 
-SoundFile file;
 ControlP5 cp5;
 ParticleSystem pl;
 ParticleSystem pr;
@@ -45,6 +46,9 @@ void setup() {
   smooth(8);
 
   size(840, 640, P3D);
+  
+  minim = new Minim (this); // call and load and play the sound file using minim classes
+  player = minim.loadFile ("ping.mp3");
 
   pl = new ParticleSystem(new PVector(0, 130));
   pr = new ParticleSystem(new PVector(650, 300));
@@ -168,6 +172,8 @@ void draw() {
   colorMode(HSB, 100);
   background(0, roomTemp/100+20, 100);
   colorMode(RGB, 255);
+  
+  letter = 'A';
 
 //<<<<<<< HEAD
   

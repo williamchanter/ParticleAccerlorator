@@ -59,10 +59,10 @@ class ParticleSystem {
       if (_particle.detect(_p2.particles)) {
         tempPart.origin = _particle.location;
         colides = true;
+        player.play ();
+        player.loop();
         fusion();
         particles.remove(i);
-        file = new SoundFile(this, "ping.mp3");
-        file.play();
       } else {
         colides = false;
       }
