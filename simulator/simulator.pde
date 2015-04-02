@@ -7,10 +7,11 @@ ParticleSystem pr;
 
 ParticleSystem tempPart;
 
-float uicol = 255;
+color uicol = color(200,200,200);
 float acc1 = 2;
 float acc2 = 2;
 
+//Collision Controls
 float speed1;
 float speed2;
 float angtop;
@@ -18,15 +19,28 @@ float angbot;
 float radio1;
 float radio2;
 
+//Fusion Varibles
+float roomTemp;
+float atomicMassTOP;
+float atomicMassBOT;
+float electronTOP;
+float electronBOT;
+float neutronTOP;
+float neutronBOT;
+float protonTOP;
+float protonBOT;
+
 int slow = 1;
 
-boolean cameraSpin;
+boolean cameraSpin, collide, inpact;
 
 PVector v;
 
 void setup() {
   
-  size(640,640, P3D);
+  smooth(8);
+  
+  size(840,640, P3D);
   
   pl = new ParticleSystem(new PVector(0,130));
   pr = new ParticleSystem(new PVector(650,300));
@@ -87,11 +101,69 @@ void setup() {
         .setRange(0, 10)
           .setValue(0.9)
             .setColorCaptionLabel(color(20, 20, 200));
+            
+  cp5.addSlider("atomicMassTOP")
+    .setPosition(270, 430)  
+      .setSize(20, 160)
+        .setRange(0, 300)
+          .setValue(2)
+            .setColorCaptionLabel(color(20, 20, 200));
+  cp5.addSlider("atomicMassBOT")
+    .setPosition(510, 430)
+      .setSize(20, 160)
+        .setRange(0, 300)
+          .setValue(-6.81)
+            .setColorCaptionLabel(color(20, 20, 200));
+    cp5.addSlider("protonsTOP")
+    .setPosition(300, 430)  
+      .setSize(20, 160)
+        .setRange(0, 200)
+          .setValue(2)
+            .setColorCaptionLabel(color(20, 20, 200));
+  cp5.addSlider("protonsBOT")
+    .setPosition(540, 430)
+      .setSize(20, 160)
+        .setRange(0, 200)
+          .setValue(-6.81)
+            .setColorCaptionLabel(color(20, 20, 200));
+   cp5.addSlider("electronTOP")
+    .setPosition(330, 430)  
+      .setSize(20, 160)
+        .setRange(0, 200)
+          .setValue(2)
+            .setColorCaptionLabel(color(20, 20, 200));
+  cp5.addSlider("electronBOT")
+    .setPosition(570, 430)
+      .setSize(20, 160)
+        .setRange(0, 200)
+          .setValue(-6.81)
+            .setColorCaptionLabel(color(20, 20, 200));
+  cp5.addSlider("neutronTOP")
+    .setPosition(120, 430)  
+      .setSize(20, 160)
+        .setRange(0, 200)
+          .setValue(2)
+            .setColorCaptionLabel(color(20, 20, 200));
+  cp5.addSlider("neutronBOT")
+    .setPosition(600, 430)
+      .setSize(20, 160)
+        .setRange(0, 200)
+          .setValue(-6.81)
+            .setColorCaptionLabel(color(20, 20, 200));
+            
+  cp5.addSlider("roomTemp")
+    .setPosition(40, 430)        
+      .setSize(20, 160)
+        .setRange(0, 6000)
+          .setValue(74)
+            .setColorCaptionLabel(color(20, 20, 200));
 }
 
 void draw() {
   
-  background(124,198,205);
+  colorMode(HSB, 100);
+  background(0,roomTemp/100+20,100);
+  colorMode(RGB, 255);
   
     pushMatrix();
     beginCamera();
@@ -109,25 +181,26 @@ void draw() {
     
     pr.detectBeam(pl);
   
-    if(frameCount%slow==0)
+    if(frameCount%10==0)
       v = PVector.random3D();
       tempPart.addParticleOff(0,random(-10,10),random(-10,10),random(-10,10));
       tempPart.runOff(color(0, 255, 0), 8);
     endCamera();
     popMatrix();
   
-  layout(40,40,40,40, uicol);
+  layout(40,40,40,240, uicol);
   disInfo();
   conPannel();
 
 }
 
-void layout(float top, float bottom, float left, float right, float uiback) {
+void layout(float top, float bottom, float left, float right, color uiback) {
+  noLights();
   fill(uiback);
   noStroke();
   rect(0, 0, left, 400);
   rect(0,0,640,top);
-  rect(640-right,0,right,400);
+  rect(840-right,0,right,640);
   rect(0,400,640,bottom);
   rect(0,400,640,240);
 }
@@ -135,9 +208,9 @@ void layout(float top, float bottom, float left, float right, float uiback) {
 void conPannel() {
   
   fill(121,203,85);
-  rect(380,420,220,180);
+  rect(380,420,250,180);
   fill(216,106,240);
-  rect(140,420,220,180);
+  rect(110,420,250,180);
   
 }
 

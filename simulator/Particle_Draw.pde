@@ -1,13 +1,18 @@
 class ParticleSystem {
   ArrayList<Particle> particles;
   ArrayList<Particleoffshot> particlesoff;
-  
+
   PVector origin;
-  PVector hidden = new PVector(0,0);
+  PVector hidden = new PVector(0, 0);
   boolean colides;
+
+  float angTOP, angBOT, radTOP, radBOT, speTOP, speBOT, accTOP, accBOT;
+
+  float a;
 
   ParticleSystem(PVector location) {
     origin = location;
+    colides = false;
     particles = new ArrayList<Particle>();
     particlesoff = new ArrayList<Particleoffshot>();
   }
@@ -25,7 +30,7 @@ class ParticleSystem {
       }
     }
   }
-  
+
   void addParticleOff(float speedDir, float x, float y, float z) {
     particlesoff.add(new Particleoffshot(origin, speedDir, x, y, z));
   }
@@ -39,26 +44,37 @@ class ParticleSystem {
       }
     }
   }
-  
+
   void detectBeam(ParticleSystem _p2)
   {
-    for(int i=0; i<particles.size(); i++)
-    {
+    angTOP = angtop;
+    angBOT = angbot;
+    radTOP = radio1;
+    radBOT = radio2;
+    speTOP = speed1;
+    speBOT = speed2;
+    println(angTOP);
+    for (int i=0; i<particles.size (); i++) {
       Particle _particle = particles.get(i);
-      if(_particle.detect(_p2.particles)) {
+      if (_particle.detect(_p2.particles)) {
         tempPart.origin = _particle.location;
+        colides = true;
+        fusion();
         particles.remove(i);
-        //background(255,0,0);
-        //colides = true;
       } else {
-        //colides = false;
-      } 
+        colides = false;
+      }
     }
   }
-  
+  void fusion() {
+    if (atomicMassTOP + atomicMassBOT == 223 && electronTOP + electronBOT == 87 && neutronTOP + neutronBOT == 137 && protonTOP + protonBOT == 87 && roomTemp == 2896) {
+      println("Francium");
+    }
+  }
 }
 
 //  void collision() {
 //    if (dist(shipList.shipPosX-10, shipList.shipPosY-10, ballPosX-25, ballPosY-25) < 40) {
 //      println("colide");
 //  }
+

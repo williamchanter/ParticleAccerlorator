@@ -59,7 +59,6 @@ class Particle {
         //background(255,0,0);
         return true;
       } else {
-        
       }
     }
       return false;
