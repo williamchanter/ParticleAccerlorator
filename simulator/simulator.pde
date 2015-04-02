@@ -1,6 +1,8 @@
 import controlP5.*;
+import processing.sound.*;
 
 
+SoundFile file;
 ControlP5 cp5;
 ParticleSystem pl;
 ParticleSystem pr;
@@ -164,6 +166,7 @@ void draw() {
   colorMode(HSB, 100);
   background(0,roomTemp/100+20,100);
   colorMode(RGB, 255);
+
   
     pushMatrix();
     beginCamera();

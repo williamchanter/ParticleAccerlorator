@@ -61,6 +61,8 @@ class ParticleSystem {
         colides = true;
         fusion();
         particles.remove(i);
+        file = new SoundFile(this, "ping.mp3");
+        file.play();
       } else {
         colides = false;
       }
