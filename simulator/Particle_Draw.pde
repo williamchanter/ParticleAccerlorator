@@ -5,6 +5,7 @@ class ParticleSystem {
   PVector origin;
   PVector hidden = new PVector(0, 0);
   boolean colides;
+  int electronCount;
 
   float angTOP, angBOT, radTOP, radBOT, speTOP, speBOT, accTOP, accBOT;
 
@@ -53,7 +54,6 @@ class ParticleSystem {
     radBOT = radio2;
     speTOP = speed1;
     speBOT = speed2;
-    println(angTOP);
     for (int i=0; i<particles.size (); i++) {
       Particle _particle = particles.get(i);
       if (_particle.detect(_p2.particles)) {
@@ -69,8 +69,29 @@ class ParticleSystem {
     }
   }
   void fusion() {
-    if (atomicMassTOP + atomicMassBOT == 223 && electronTOP + electronBOT == 87 && neutronTOP + neutronBOT == 137 && protonTOP + protonBOT == 87 && roomTemp == 2896) {
+    println(radTOP);
+    if (radTOP + radBOT >= 1200 && radTOP + radBOT <= 280) {
+      electronCount = 2;
+    } else if (radTOP + radBOT >= 281 && radTOP + radBOT <= 200) {
+      electronCount = 4;
+    } else {
+      electronCount = 1;
+    }
+
+    if (atomicMassTOP + atomicMassBOT == 223 && electronTOP + electronBOT == 87/electronCount && neutronTOP + neutronBOT == 137 && protonTOP + protonBOT == 87 && roomTemp == 2896) {
       println("Francium");
+    }
+    if (atomicMassTOP + atomicMassBOT == 112 && electronTOP + electronBOT == 10/electronCount && neutronTOP + neutronBOT == 20 && protonTOP + protonBOT == 10 && roomTemp == 2896) {
+      println("Cranium");
+    }
+    if (atomicMassTOP + atomicMassBOT == 45 && electronTOP + electronBOT == 34/electronCount && neutronTOP + neutronBOT == 64 && protonTOP + protonBOT == 34 && roomTemp == 2896) {
+      println("Willium");
+    }
+    if (atomicMassTOP + atomicMassBOT == 250 && electronTOP + electronBOT == 97/electronCount && neutronTOP + neutronBOT == 198 && protonTOP + protonBOT == 97 && roomTemp == 2896) {
+      println("Rareamantium");
+    }
+    if (atomicMassTOP + atomicMassBOT == 223 && electronTOP + electronBOT == 87/electronCount && neutronTOP + neutronBOT == 137 && protonTOP + protonBOT == 87 && roomTemp == 2896) {
+      println("Fireitum");
     }
   }
 }
