@@ -169,12 +169,12 @@ void draw() {
   background(0, roomTemp/100+20, 100);
   colorMode(RGB, 255);
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
   
-=======
+//=======
   switch(letter) { // cases for the game, these are the heart of the game
   case 'A': 
->>>>>>> 8b284f28131c6859428ee5fcb91ac084367633fa
+//>>>>>>> 8b284f28131c6859428ee5fcb91ac084367633fa
     pushMatrix();
     beginCamera();
     if (cameraSpin) {
