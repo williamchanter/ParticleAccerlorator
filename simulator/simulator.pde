@@ -5,6 +5,7 @@ Minim minim;
 AudioPlayer player;
 
 ControlP5 cp5;
+controlP5.Button helpbutton;
 
 ParticleSystem pl;
 ParticleSystem pr;
@@ -15,6 +16,7 @@ color uicol = color(200, 200, 200);
 float acc1 = 2;
 float acc2 = 2;
 float counter = 0;
+float delay;
 
 //Collision Controls
 float speed1;
@@ -37,8 +39,8 @@ float radio2;
 
 int slow = 1;
 
-boolean cameraSpin, collide, inpact;
-PImage UI;
+boolean cameraSpin, collide, inpact, statDisplay = true;
+PImage UI, UI_help;
 
 PVector v;
 
@@ -47,10 +49,9 @@ char letter;
 void setup() {
 
   smooth(8);
-
   size(670, 640, P3D);
-
   UI = loadImage("UI.png"); 
+  UI_help = loadImage("UI_help.png"); 
 
   minim = new Minim (this); // call and load and play the sound file using minim classes
   player = minim.loadFile ("ping.mp3");
@@ -62,9 +63,12 @@ void setup() {
   cp5 = new ControlP5(this);
   cp5.setColorForeground(0x00000000);
   cp5.setColorBackground(0xffffffff);
+  
+  helpbutton = cp5.addButton("What the hell do I do?", 10, 283, 0, 104, 22);
+  helpbutton.setColorCaptionLabel(color(20, 20, 200));
 
   cp5.addSlider("acc1")
-    .setPosition(150, 430)
+    .setPosition(120, 430)
       .setSize(20, 160)
         .setRange(0, 1)
           .setValue(0.9)
@@ -77,7 +81,7 @@ void setup() {
             .setColorCaptionLabel(color(20, 20, 200));
 
   cp5.addSlider("speed1")
-    .setPosition(210, 430)
+    .setPosition(180, 430)
       .setSize(20, 160)
         .setRange(0, 10)
           .setValue(8)
@@ -90,78 +94,78 @@ void setup() {
             .setColorCaptionLabel(color(20, 20, 200));
 
   cp5.addSlider("angtop")
-    .setPosition(240, 430)  
+    .setPosition(210, 430)  
       .setSize(20, 160)
         .setRange(0, 10)
-          .setValue(2)
+          .setValue(10)
             .setColorCaptionLabel(color(20, 20, 200));
   cp5.addSlider("angbot")
     .setPosition(480, 430)
       .setSize(20, 160)
         .setRange(0, -10)
-          .setValue(-6.81)
+          .setValue(-10)
             .setColorCaptionLabel(color(20, 20, 200));
 
   cp5.addSlider("radio1")
-    .setPosition(180, 430)
+    .setPosition(150, 430)
       .setSize(20, 160)
         .setRange(0, 100)
-          .setValue(0.9)
+          .setValue(20)
             .setColorCaptionLabel(color(20, 20, 200));
   cp5.addSlider("radio2")
     .setPosition(420, 430)        
       .setSize(20, 160)
         .setRange(0, 100)
-          .setValue(0.9)
+          .setValue(20)
             .setColorCaptionLabel(color(20, 20, 200));
 
   cp5.addSlider("atomicMassTOP")
-    .setPosition(270, 430)  
+    .setPosition(240, 430)  
       .setSize(20, 160)
         .setRange(0, 300)
-          .setValue(2)
+          .setValue(10)
             .setColorCaptionLabel(color(20, 20, 200));
   cp5.addSlider("atomicMassBOT")
     .setPosition(510, 430)
       .setSize(20, 160)
         .setRange(0, 300)
-          .setValue(-6.81)
+          .setValue(10)
             .setColorCaptionLabel(color(20, 20, 200));
   cp5.addSlider("protonsTOP")
-    .setPosition(300, 430)  
+    .setPosition(270, 430)  
       .setSize(20, 160)
         .setRange(0, 200)
-          .setValue(2)
+          .setValue(10)
             .setColorCaptionLabel(color(20, 20, 200));
   cp5.addSlider("protonsBOT")
     .setPosition(540, 430)
       .setSize(20, 160)
         .setRange(0, 200)
-          .setValue(-6.81)
+          .setValue(10)
             .setColorCaptionLabel(color(20, 20, 200));
   cp5.addSlider("electronTOP")
-    .setPosition(330, 430)  
+    .setPosition(300, 430)  
       .setSize(20, 160)
         .setRange(0, 200)
-          .setValue(2)
+          .setValue(10)
             .setColorCaptionLabel(color(20, 20, 200));
   cp5.addSlider("electronBOT")
     .setPosition(570, 430)
       .setSize(20, 160)
         .setRange(0, 200)
-          .setValue(-6.81)
+          .setValue(10)
             .setColorCaptionLabel(color(20, 20, 200));
   cp5.addSlider("neutronTOP")
-    .setPosition(120, 430)  
+    .setPosition(330, 430)  
       .setSize(20, 160)
         .setRange(0, 200)
-          .setValue(2)
+          .setValue(10)
             .setColorCaptionLabel(color(20, 20, 200));
   cp5.addSlider("neutronBOT")
     .setPosition(600, 430)
       .setSize(20, 160)
         .setRange(0, 200)
-          .setValue(-6.81)
+          .setValue(10)
             .setColorCaptionLabel(color(20, 20, 200));
 
   cp5.addSlider("roomTemp")
@@ -219,6 +223,7 @@ void draw() {
 
   switch(letter) { // cases for the game, these are the heart of the game
   case 'A': 
+    information();   
     pushMatrix();
     beginCamera();
     if (cameraSpin) {
@@ -288,13 +293,11 @@ void conPannel() {
 }
 
 void led() {
-  
   if (counter >= 255) {
-    counter-=20;
+    counter-=255;
   } else if (counter <= 255) {
     counter+=20;
   }
-  println(counter);
   fill(counter,0,0);
   noStroke();
   ellipse(33,450,10,10);
@@ -302,7 +305,10 @@ void led() {
 }
 
 void disInfo() {
+  pushMatrix();
+  translate(0,0,0);
   textAlign(LEFT);
+  if(statDisplay) {
   text("Atomic Mass: " + atomicMassTOP, 50, 60);
   text("Electorn Count:  " + electronTOP, 50, 80);
   text("Neutron Count: " + neutronTOP, 50, 100);
@@ -313,6 +319,23 @@ void disInfo() {
   text("Neutron Count: " + neutronBOT, 50, 350);
   text("Proton Top: " + protonBOT, 50, 370);
   text("Radioacvity: " + radio2, 50, 390);
+  }
+  popMatrix();
+}
+
+void information() {
+  println(delay);
+  pushMatrix();
+  translate(0,0,0);
+  if(delay <= 1) {
+    delay = 0;
+    statDisplay = true;
+  } else if (delay <= 600 && delay >= 2) {
+    delay--;
+    image(UI_help, 40, 40, 593, 361); //display the image taken from the snapshot
+    statDisplay = false;
+  }
+  popMatrix();
 }
 
 void mouseDragged() {
@@ -321,6 +344,25 @@ void mouseDragged() {
 void mouseReleased() {
   cameraSpin = false;
 }
+
+void controlEvent(ControlEvent theEvent) {
+  /* events triggered by controllers are automatically forwarded to
+   the controlEvent method. by checking the name of a controller one can
+   distinguish which of the controllers has been changed.
+   */
+
+  /* check if the event is from a controller otherwise you'll get an error
+   when clicking other interface elements like Radiobutton that don't support
+   the controller() methods
+   */
+
+  if (theEvent.isController()) { // button contorls below
+
+    if (theEvent.controller().name()=="What the hell do I do?") {
+      delay = 200;
+    }
+  }
+} 
 
 
 //void colide() {

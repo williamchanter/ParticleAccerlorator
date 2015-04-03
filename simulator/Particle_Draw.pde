@@ -69,7 +69,6 @@ class ParticleSystem {
     }
   }
   void fusion() {
-    println(radTOP);
     if (radTOP + radBOT >= 1200 && radTOP + radBOT <= 280) {
       electronCount = 2;
     } else if (radTOP + radBOT >= 281 && radTOP + radBOT <= 200) {
