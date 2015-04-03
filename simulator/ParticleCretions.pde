@@ -1,4 +1,4 @@
-class Particleoffshot {
+class Particleoffshot { //created this before understand inhertance :'(
   PVector location;
   PVector velocity;
   PVector acceleration;

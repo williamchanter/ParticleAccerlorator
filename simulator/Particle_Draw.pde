@@ -14,7 +14,7 @@ class ParticleSystem {
   ParticleSystem(PVector location) {
     origin = location;
     colides = false;
-    particles = new ArrayList<Particle>();
+    particles = new ArrayList<Particle>(); // arraylist holding the particles
     particlesoff = new ArrayList<Particleoffshot>();
   }
 

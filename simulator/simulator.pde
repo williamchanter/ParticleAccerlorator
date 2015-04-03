@@ -1,16 +1,16 @@
-import controlP5.*;
+import controlP5.*; // liabary to control controls
 
-import ddf.minim.*; // Liabary tot contorl music playback
+import ddf.minim.*; // Liabary to contorl music playback
 Minim minim;
 AudioPlayer player;
 
 ControlP5 cp5;
-controlP5.Button helpbutton;
+controlP5.Button helpbutton; // cp5 buttons
 
-ParticleSystem pl;
+ParticleSystem pl; // two streams of particles
 ParticleSystem pr;
 
-ParticleSystem tempPart;
+ParticleSystem tempPart; //calling off shot paritcles
 
 color uicol = color(200, 200, 200);
 float acc1 = 2;
@@ -37,14 +37,14 @@ float protonsBOT;
 float radio1;
 float radio2;
 
-int slow = 1;
+int slow = 1; //developemnt varible
 
-boolean cameraSpin, collide, inpact, statDisplay = true;
-PImage UI, UI_help;
+boolean cameraSpin, collide, inpact, statDisplay = true; // boolean controsl for camrea collusons and stats
+PImage UI, UI_help; // images
 
-PVector v;
-PFont F;
-char letter;
+PVector v; 
+PFont F; // custom fonts
+char letter; // cases (ended up not using)
 
 void setup() {
 
@@ -69,6 +69,7 @@ void setup() {
   helpbutton = cp5.addButton("What the hell do I do?", 10, 283, 0, 104, 22);
   helpbutton.setColorCaptionLabel(color(20, 20, 200));
 
+  // set the postion range and vaule of every single controller
   cp5.addSlider("acc1")
     .setPosition(120, 430)
       .setSize(20, 160)
@@ -177,7 +178,7 @@ void setup() {
           .setValue(3000)
             .setColorCaptionLabel(color(20, 20, 200));
   
-  cp5.getController("roomTemp").setCaptionLabel("T");
+  cp5.getController("roomTemp").setCaptionLabel("T"); // lable all the controls
   cp5.getController("acc1").setCaptionLabel("A");
   cp5.getController("acc2").setCaptionLabel("A");
   cp5.getController("speed1").setCaptionLabel("S");
@@ -195,7 +196,7 @@ void setup() {
   cp5.getController("neutronTOP").setCaptionLabel("N");
   cp5.getController("neutronBOT").setCaptionLabel("N");
   
-  style("roomTemp");
+  style("roomTemp"); // add appropraite styles to each of them
   style("acc1");
   style("acc2");
   style("speed1");
@@ -217,7 +218,7 @@ void setup() {
 
 void draw() {
 
-  colorMode(HSB, 100);
+  colorMode(HSB, 100); // more suitable for red variation
   background(0, roomTemp/100+20, 100);
   colorMode(RGB, 255);
   textFont(F); // add custum font
@@ -229,11 +230,11 @@ void draw() {
     pushMatrix();
     beginCamera();
     if (cameraSpin) {
-      camera(mouseX, mouseY, 120.0, width/2, height/2, -10, 0.0, 1.0, 0.0);
+      camera(mouseX, mouseY, 120.0, width/2, height/2, -10, 0.0, 1.0, 0.0); // camera angles coulnt get this to stay beind the console
     }
     translate(0, 0, -30);
     if (frameCount%slow==0)
-      pl.addParticle(acc1, speed1, speed1+0.2, angtop, angtop+0);
+      pl.addParticle(acc1, speed1, speed1+0.2, angtop, angtop+0); // add paritcles streams
     pl.run(color(74, 82, 231), 20);
 
     if (frameCount%slow==0)
@@ -244,17 +245,17 @@ void draw() {
 
     if (frameCount%10==0)
       v = PVector.random3D();
-    tempPart.addParticleOff(0, random(-10, 10), random(-10, 10), random(-10, 10));
+    tempPart.addParticleOff(0, random(-10, 10), random(-10, 10), random(-10, 10)); // random 3d direction
     tempPart.runOff(color(0, 255, 0), 8);
     endCamera();
     popMatrix();
 
-    layout(40, 40, 40, 240, uicol);
+    layout(40, 40, 40, 240, uicol); // funtion calls
     disInfo();
     conPannel();
     break;
   case 'B':
-
+  // was not need but here just in case of emergency
 
     break;
   }
@@ -262,7 +263,7 @@ void draw() {
 
 void layout(float top, float bottom, float left, float right, color uiback) {
   noLights();
-  image(UI, 0, 0, 670, 640); //display the image taken from the snapshot
+  image(UI, 0, 0, 670, 640); //display the UI
   led();
   //fill(uiback);
   //noStroke();
@@ -294,7 +295,7 @@ void conPannel() {
   //rect(110, 420, 250, 180);
 }
 
-void led() {
+void led() { // blinking LED light
   if (counter >= 255) {
     counter-=255;
   } else if (counter <= 255) {
@@ -311,7 +312,7 @@ void disInfo() {
   translate(0,0,0);
   textAlign(LEFT);
   textSize(15);
-  if(statDisplay) {
+  if(statDisplay) { // dsiplay the vaules from the varibles
   text("Atomic Mass: " + atomicMassTOP, 50, 60);
   text("Electorn Count:  " + electronTOP, 50, 80);
   text("Neutron Count: " + neutronTOP, 50, 100);
@@ -332,9 +333,9 @@ void information() {
   if(delay <= 1) {
     delay = 0;
     statDisplay = true;
-  } else if (delay <= 600 && delay >= 2) {
+  } else if (delay <= 600 && delay >= 2) { // delay the effect of it disapring
     delay--;
-    image(UI_help, 40, 40, 593, 361); //display the image taken from the snapshot
+    image(UI_help, 40, 40, 593, 361); //display the instructions
     statDisplay = false;
   }
   popMatrix();
@@ -361,13 +362,8 @@ void controlEvent(ControlEvent theEvent) {
   if (theEvent.isController()) { // button contorls below
 
     if (theEvent.controller().name()=="What the hell do I do?") {
-      delay = 200;
+      delay = 100; //set delay
     }
   }
 } 
-
-
-//void colide() {
-//  print(pr.location.y);
-//}
 
