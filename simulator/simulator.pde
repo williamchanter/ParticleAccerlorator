@@ -5,6 +5,7 @@ Minim minim;
 AudioPlayer player;
 
 ControlP5 cp5;
+
 ParticleSystem pl;
 ParticleSystem pr;
 
@@ -13,14 +14,13 @@ ParticleSystem tempPart;
 color uicol = color(200, 200, 200);
 float acc1 = 2;
 float acc2 = 2;
+float counter = 0;
 
 //Collision Controls
 float speed1;
 float speed2;
 float angtop;
 float angbot;
-float radio1;
-float radio2;
 
 //Fusion Varibles
 float roomTemp;
@@ -32,10 +32,13 @@ float neutronTOP;
 float neutronBOT;
 float protonTOP;
 float protonBOT;
+float radio1;
+float radio2;
 
 int slow = 1;
 
 boolean cameraSpin, collide, inpact;
+PImage UI;
 
 PVector v;
 
@@ -45,8 +48,10 @@ void setup() {
 
   smooth(8);
 
-  size(840, 640, P3D);
-  
+  size(670, 640, P3D);
+
+  UI = loadImage("UI.png"); 
+
   minim = new Minim (this); // call and load and play the sound file using minim classes
   player = minim.loadFile ("ping.mp3");
 
@@ -160,11 +165,48 @@ void setup() {
             .setColorCaptionLabel(color(20, 20, 200));
 
   cp5.addSlider("roomTemp")
-    .setPosition(40, 430)        
-      .setSize(20, 160)
+    .setPosition(70, 430)        
+      .setSize(10, 160)
         .setRange(0, 6000)
-          .setValue(74)
+          .setValue(3000)
             .setColorCaptionLabel(color(20, 20, 200));
+  
+  cp5.getController("roomTemp").setCaptionLabel("T");
+  cp5.getController("acc1").setCaptionLabel("A");
+  cp5.getController("acc2").setCaptionLabel("A");
+  cp5.getController("speed1").setCaptionLabel("S");
+  cp5.getController("speed2").setCaptionLabel("S");
+  cp5.getController("angtop").setCaptionLabel("a");
+  cp5.getController("angbot").setCaptionLabel("a");
+  cp5.getController("radio1").setCaptionLabel("R");
+  cp5.getController("radio2").setCaptionLabel("R");
+  cp5.getController("atomicMassTOP").setCaptionLabel("M");
+  cp5.getController("atomicMassBOT").setCaptionLabel("M");
+  cp5.getController("protonsTOP").setCaptionLabel("P");
+  cp5.getController("protonsBOT").setCaptionLabel("P");
+  cp5.getController("electronTOP").setCaptionLabel("E");
+  cp5.getController("electronBOT").setCaptionLabel("E");
+  cp5.getController("neutronTOP").setCaptionLabel("N");
+  cp5.getController("neutronBOT").setCaptionLabel("N");
+  
+  style("roomTemp");
+  style("acc1");
+  style("acc2");
+  style("speed1");
+  style("speed2");
+  style("angtop");
+  style("angbot");
+  style("radio1");
+  style("radio2");
+  style("atomicMassTOP");
+  style("atomicMassBOT");
+  style("protonsTOP");
+  style("protonsBOT");
+  style("electronTOP");
+  style("electronBOT");
+  style("neutronTOP");
+  style("neutronBOT");
+  
 }
 
 void draw() {
@@ -172,15 +214,11 @@ void draw() {
   colorMode(HSB, 100);
   background(0, roomTemp/100+20, 100);
   colorMode(RGB, 255);
-  
+
   letter = 'A';
 
-//<<<<<<< HEAD
-  
-//=======
   switch(letter) { // cases for the game, these are the heart of the game
   case 'A': 
-//>>>>>>> 8b284f28131c6859428ee5fcb91ac084367633fa
     pushMatrix();
     beginCamera();
     if (cameraSpin) {
@@ -215,43 +253,77 @@ void draw() {
   }
 }
 
-  void layout(float top, float bottom, float left, float right, color uiback) {
-    noLights();
-    fill(uiback);
-    noStroke();
-    rect(0, 0, left, 400);
-    rect(0, 0, 640, top);
-    rect(840-right, 0, right, 640);
-    rect(0, 400, 640, bottom);
-    rect(0, 400, 640, 240);
+void layout(float top, float bottom, float left, float right, color uiback) {
+  noLights();
+  image(UI, 0, 0, 670, 640); //display the image taken from the snapshot
+  led();
+  //fill(uiback);
+  //noStroke();
+  //rect(0, 0, left, 400);
+  //rect(0, 0, 640, top);
+  //rect(870-right, 0, right, 640);
+  //rect(0, 400, 640, bottom);
+  //rect(0, 400, 640, 240);
+}
+
+void style(String theControllerName) {
+  controlP5.Controller c = cp5.getController(theControllerName);
+
+  // add some padding to the caption label background
+  c.getCaptionLabel().getStyle().setPadding(4, 4, 3, 4);
+
+  // shift the caption label up by 4px
+  c.getCaptionLabel().getStyle().setMargin(-25, 0, 0, 4); 
+
+  // set the background color of the caption label
+  //c.getCaptionLabel().setColorBackground(color(10, 20, 30, 140));
+}
+
+void conPannel() {
+
+  fill(121, 203, 85);
+  //rect(380, 420, 250, 180);
+  fill(216, 106, 240);
+  //rect(110, 420, 250, 180);
+}
+
+void led() {
+  
+  if (counter >= 255) {
+    counter-=20;
+  } else if (counter <= 255) {
+    counter+=20;
   }
+  println(counter);
+  fill(counter,0,0);
+  noStroke();
+  ellipse(33,450,10,10);
+  fill(255);
+}
 
-  void conPannel() {
+void disInfo() {
+  textAlign(LEFT);
+  text("Atomic Mass: " + atomicMassTOP, 50, 60);
+  text("Electorn Count:  " + electronTOP, 50, 80);
+  text("Neutron Count: " + neutronTOP, 50, 100);
+  text("Proton Top: " + protonTOP, 50, 120);
+  text("Radioacvity: " + radio1, 50, 140);
+  text("Atomic Mass: " + atomicMassBOT, 50, 310);
+  text("Electorn Count: " + electronBOT, 50, 330);
+  text("Neutron Count: " + neutronBOT, 50, 350);
+  text("Proton Top: " + protonBOT, 50, 370);
+  text("Radioacvity: " + radio2, 50, 390);
+}
 
-    fill(121, 203, 85);
-    rect(380, 420, 250, 180);
-    fill(216, 106, 240);
-    rect(110, 420, 250, 180);
-  }
-
-  void disInfo() {
-
-    text("Particle Speeds: " + acc1, 50, 60);
-    text("Top Particle Speeds: " + acc2, 50, 80);
-
-    text("Top Particle Angle: " + angtop, 50, 100);
-    text("Bottom Particle Angle: " + angbot, 50, 120);
-  }
-
-  void mouseDragged() {
-    cameraSpin = true;
-  }
-  void mouseReleased() {
-    cameraSpin = false;
-  }
+void mouseDragged() {
+  cameraSpin = true;
+}
+void mouseReleased() {
+  cameraSpin = false;
+}
 
 
-  //void colide() {
-  //  print(pr.location.y);
-  //}
+//void colide() {
+//  print(pr.location.y);
+//}
 
