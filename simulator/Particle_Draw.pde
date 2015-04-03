@@ -76,23 +76,23 @@ class ParticleSystem {
     } else {
       electronCount = 1;
     }
-    if (atomicMassTOP <= 50) {
+    if (atomicMassTOP + atomicMassBOT == 223 && electronTOP + electronBOT == 87/electronCount && neutronTOP + neutronBOT == 137 && protonsTOP + protonsBOT == 87 && roomTemp == 2896) {
       powerupStyle("You have fused\n FRANCIUM");
     }
-    if (atomicMassTOP + atomicMassBOT == 223 && electronTOP + electronBOT == 87/electronCount && neutronTOP + neutronBOT == 137 && protonTOP + protonBOT == 87 && roomTemp == 2896) {
-      println("Francium");
+    if (atomicMassTOP + atomicMassBOT == 112 && electronTOP + electronBOT == 10/electronCount && neutronTOP + neutronBOT == 20 && protonsTOP + protonsBOT == 10 && roomTemp == 2896) {
+      powerupStyle("You have fused\n HEILIUM");
     }
-    if (atomicMassTOP + atomicMassBOT == 112 && electronTOP + electronBOT == 10/electronCount && neutronTOP + neutronBOT == 20 && protonTOP + protonBOT == 10 && roomTemp == 2896) {
-      println("Cranium");
+    if (atomicMassTOP + atomicMassBOT == 45 && electronTOP + electronBOT == 34/electronCount && neutronTOP + neutronBOT == 64 && protonsTOP + protonsBOT == 34 && roomTemp == 2896) {
+      powerupStyle("You have fused\n IRON");
     }
-    if (atomicMassTOP + atomicMassBOT == 45 && electronTOP + electronBOT == 34/electronCount && neutronTOP + neutronBOT == 64 && protonTOP + protonBOT == 34 && roomTemp == 2896) {
-      println("Willium");
+    if (atomicMassTOP + atomicMassBOT == 250 && electronTOP + electronBOT == 97/electronCount && neutronTOP + neutronBOT == 198 && protonsTOP + protonsBOT == 97 && roomTemp == 2896) {
+      powerupStyle("You have fused\n URANIUM");
     }
-    if (atomicMassTOP + atomicMassBOT == 250 && electronTOP + electronBOT == 97/electronCount && neutronTOP + neutronBOT == 198 && protonTOP + protonBOT == 97 && roomTemp == 2896) {
-      println("Rareamantium");
+    if (atomicMassTOP + atomicMassBOT == 223 && electronTOP + electronBOT == 87/electronCount && neutronTOP + neutronBOT == 137 && protonsTOP + protonsBOT == 87 && roomTemp == 2896) {
+      powerupStyle("You have fused\n PLUTONIUM");
     }
-    if (atomicMassTOP + atomicMassBOT == 223 && electronTOP + electronBOT == 87/electronCount && neutronTOP + neutronBOT == 137 && protonTOP + protonBOT == 87 && roomTemp == 2896) {
-      println("Fireitum");
+    if (atomicMassTOP + atomicMassBOT == 0 && electronTOP + electronBOT == 0/electronCount && neutronTOP + neutronBOT == 0 && protonsTOP + protonsBOT == 0 && roomTemp == 6000) {
+      powerupStyle("You have fused\n SPECIAL ELEMENT");
     }
   }
 

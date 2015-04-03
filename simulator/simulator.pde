@@ -32,8 +32,8 @@ float electronTOP;
 float electronBOT;
 float neutronTOP;
 float neutronBOT;
-float protonTOP;
-float protonBOT;
+float protonsTOP;
+float protonsBOT;
 float radio1;
 float radio2;
 
@@ -315,12 +315,12 @@ void disInfo() {
   text("Atomic Mass: " + atomicMassTOP, 50, 60);
   text("Electorn Count:  " + electronTOP, 50, 80);
   text("Neutron Count: " + neutronTOP, 50, 100);
-  text("Proton Top: " + protonTOP, 50, 120);
+  text("Proton: " + protonsTOP, 50, 120);
   text("Radioacvity: " + radio1, 50, 140);
   text("Atomic Mass: " + atomicMassBOT, 50, 310);
   text("Electorn Count: " + electronBOT, 50, 330);
   text("Neutron Count: " + neutronBOT, 50, 350);
-  text("Proton Top: " + protonBOT, 50, 370);
+  text("Proton: " + protonsBOT, 50, 370);
   text("Radioacvity: " + radio2, 50, 390);
   }
   popMatrix();
