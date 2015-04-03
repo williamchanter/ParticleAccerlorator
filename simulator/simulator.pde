@@ -43,7 +43,7 @@ boolean cameraSpin, collide, inpact, statDisplay = true;
 PImage UI, UI_help;
 
 PVector v;
-
+PFont F;
 char letter;
 
 void setup() {
@@ -59,6 +59,8 @@ void setup() {
   pl = new ParticleSystem(new PVector(0, 130));
   pr = new ParticleSystem(new PVector(650, 300));
   tempPart = new ParticleSystem(new PVector(0, 0, 0));
+  
+  F = createFont("Arial Bold", 25); // Custim fonts defining
 
   cp5 = new ControlP5(this);
   cp5.setColorForeground(0x00000000);
@@ -218,7 +220,7 @@ void draw() {
   colorMode(HSB, 100);
   background(0, roomTemp/100+20, 100);
   colorMode(RGB, 255);
-
+  textFont(F); // add custum font
   letter = 'A';
 
   switch(letter) { // cases for the game, these are the heart of the game
@@ -308,6 +310,7 @@ void disInfo() {
   pushMatrix();
   translate(0,0,0);
   textAlign(LEFT);
+  textSize(15);
   if(statDisplay) {
   text("Atomic Mass: " + atomicMassTOP, 50, 60);
   text("Electorn Count:  " + electronTOP, 50, 80);
@@ -324,7 +327,6 @@ void disInfo() {
 }
 
 void information() {
-  println(delay);
   pushMatrix();
   translate(0,0,0);
   if(delay <= 1) {

@@ -76,7 +76,9 @@ class ParticleSystem {
     } else {
       electronCount = 1;
     }
-
+    if (atomicMassTOP <= 50) {
+      powerupStyle("You have fused\n FRANCIUM");
+    }
     if (atomicMassTOP + atomicMassBOT == 223 && electronTOP + electronBOT == 87/electronCount && neutronTOP + neutronBOT == 137 && protonTOP + protonBOT == 87 && roomTemp == 2896) {
       println("Francium");
     }
@@ -93,7 +95,17 @@ class ParticleSystem {
       println("Fireitum");
     }
   }
+
+  void powerupStyle(String alertText) { // style class for the powerup stying
+    pushMatrix(); // code has been descibed above
+    textAlign(CENTER);
+    translate(0, 0, 0); // postion way behind
+    textSize(30);
+    text(alertText, width/2 + 150, 82);
+    popMatrix();
+  }
 }
+
 
 //  void collision() {
 //    if (dist(shipList.shipPosX-10, shipList.shipPosY-10, ballPosX-25, ballPosY-25) < 40) {
