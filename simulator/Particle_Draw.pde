@@ -18,7 +18,7 @@ class ParticleSystem {
     particlesoff = new ArrayList<Particleoffshot>();
   }
 
-  void addParticle(float speedDir, float speeder1, float speeder2, float ang1, float ang2) {
+  void addParticle(float speedDir, float speeder1, float speeder2, float ang1, float ang2) { // create particles
     particles.add(new Particle(origin, speedDir, speeder1, speeder2, ang1, ang2));
   }
 
@@ -26,7 +26,7 @@ class ParticleSystem {
     for (int i = particles.size ()-1; i >= 0; i--) {
       Particle p = particles.get(i);
       p.run(pcol, size);
-      if (p.isDead()) {
+      if (p.isDead()) { // rmeoves dead particles
         particles.remove(i);
       }
     }
@@ -46,17 +46,18 @@ class ParticleSystem {
     }
   }
 
-  void detectBeam(ParticleSystem _p2)
-  {
+  void detectBeam(ParticleSystem _p2) {
+    
     angTOP = angtop;
     angBOT = angbot;
     radTOP = radio1;
     radBOT = radio2;
     speTOP = speed1;
     speBOT = speed2;
+    
     for (int i=0; i<particles.size (); i++) {
       Particle _particle = particles.get(i);
-      if (_particle.detect(_p2.particles)) {
+      if (_particle.detect(_p2.particles)) { // dectes the colision of the particles and runs the script as it happens
         tempPart.origin = _particle.location;
         colides = true;
         player.play ();
@@ -69,7 +70,7 @@ class ParticleSystem {
     }
   }
   void fusion() {
-    if (radTOP + radBOT >= 1200 && radTOP + radBOT <= 280) {
+    if (radTOP + radBOT >= 1200 && radTOP + radBOT <= 280) { // has an effect if you increase the radiation vairible as it means the elcectons are out of balance.
       electronCount = 2;
     } else if (radTOP + radBOT >= 281 && radTOP + radBOT <= 200) {
       electronCount = 4;
